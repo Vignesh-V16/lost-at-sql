@@ -24,7 +24,8 @@
     "handout": "node scripts/handout.mjs",
     "export": "node scripts/transfer.mjs",
     "import": "node scripts/transfer.mjs --import",
-    "check:db": "node scripts/check-db.mjs"
+    "check:db": "node scripts/check-db.mjs",
+    "use:atlas": "node scripts/use-atlas.mjs"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"
