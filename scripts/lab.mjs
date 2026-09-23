@@ -132,7 +132,7 @@ try {
   }
   await disconnectDatabase();
 } catch (err) {
-  problems.push(`Database unreachable: ${err.message}. Start MongoDB, then run this again.`);
+  problems.push(`Database unreachable: ${err.message.split(String.fromCharCode(10))[0]}  —  run  npm run check:db  for the reason.`);
 }
 
 /* ── 5. verdict ───────────────────────────────────────────────────── */

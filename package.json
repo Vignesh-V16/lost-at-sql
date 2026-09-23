@@ -23,7 +23,8 @@
     "lab:check": "node scripts/lab.mjs --check",
     "handout": "node scripts/handout.mjs",
     "export": "node scripts/transfer.mjs",
-    "import": "node scripts/transfer.mjs --import"
+    "import": "node scripts/transfer.mjs --import",
+    "check:db": "node scripts/check-db.mjs"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"
