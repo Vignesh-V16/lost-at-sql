@@ -1,0 +1,1313 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ------------------------------------------------------------------ base */
+
+:root {
+  color-scheme: light;
+  --ink: #141414;
+  --ink-soft: #524d45;
+  --paper: #fbf6e9;
+  --paper-2: #f1e8d2;
+  --paper-3: #e6dcc2;
+  --red: #e5322d;
+  --red-deep: #b0201c;
+  --yellow: #ffd12e;
+  --blue: #2364e8;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: #f1e8d2;
+  background-image: radial-gradient(circle, rgba(20, 20, 20, 0.07) 1px, transparent 1.3px);
+  background-size: 9px 9px;
+  color: var(--ink);
+  min-height: 100dvh;
+  overflow-x: hidden;
+  font-family: 'Comic Neue', 'Comic Sans MS', system-ui, sans-serif;
+  font-size: 15.5px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100dvh;
+  isolation: isolate;
+}
+
+::selection {
+  background: var(--yellow);
+  color: var(--ink);
+}
+
+/* Focus — a thick yellow ring, in-world. */
+:focus-visible {
+  outline: 3px solid var(--yellow);
+  outline-offset: 2px;
+}
+button:focus:not(:focus-visible),
+a:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #141414 transparent;
+}
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-thumb {
+  background: #141414;
+  border: 2px solid #fbf6e9;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* the result printout scrolls in its own green: a green-deep thumb on the
+   tray's light green, not the page's ink thumb with a cream halo */
+.scroll-green {
+  scrollbar-color: #196a36 #d8f3e1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ------------------------------------------------------------ components */
+
+@layer components {
+  /* Small caps-style label lettering. */
+  .label {
+    @apply font-display text-[0.95rem] uppercase tracking-comic text-ink-soft;
+  }
+  .label-strong {
+    @apply font-display text-[0.95rem] uppercase tracking-comic text-ink;
+  }
+
+  /* Display headings — hand-lettered comic titles. */
+  .h-display {
+    @apply font-display uppercase leading-[0.9] tracking-comic;
+  }
+  .h-section {
+    @apply font-display text-4xl uppercase leading-none tracking-comic sm:text-5xl;
+  }
+  .h-sub {
+    @apply font-display text-2xl uppercase leading-none tracking-comic text-ink-soft;
+  }
+
+  /* The comic panel: white, thick ink border, hard offset shadow. */
+  .panel {
+    @apply relative border-3 border-ink bg-white shadow-comic;
+  }
+  .panel-paper {
+    @apply relative border-3 border-ink bg-paper shadow-comic;
+  }
+  .panel-flat {
+    @apply relative border-3 border-ink bg-white;
+  }
+  .panel-raised {
+    @apply relative border-3 border-ink bg-white shadow-comic-lg;
+  }
+
+  /* Caption box — the narrator's yellow rectangle. */
+  .caption {
+    @apply inline-block border-3 border-ink bg-yellow px-3 py-1 font-display text-lg uppercase leading-none tracking-comic text-ink shadow-comic-sm;
+  }
+  .caption-white {
+    @apply inline-block border-3 border-ink bg-white px-3 py-1 font-display text-lg uppercase leading-none tracking-comic text-ink shadow-comic-sm;
+  }
+  .caption-red {
+    @apply inline-block border-3 border-ink bg-red px-3 py-1 font-display text-lg uppercase leading-none tracking-comic text-white shadow-comic-sm;
+  }
+  .caption-blue {
+    @apply inline-block border-3 border-ink bg-blue px-3 py-1 font-display text-lg uppercase leading-none tracking-comic text-white shadow-comic-sm;
+  }
+
+  /* Speech bubble with a tail. */
+  .bubble {
+    @apply relative border-3 border-ink bg-white px-4 py-3 shadow-comic;
+    border-radius: 18px;
+  }
+  .bubble::before,
+  .bubble::after {
+    content: '';
+    position: absolute;
+    left: 28px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+  }
+  .bubble::before {
+    bottom: -19px;
+    border-width: 19px 14px 0 0;
+    border-color: var(--ink) transparent transparent transparent;
+  }
+  .bubble::after {
+    bottom: -13px;
+    left: 31px;
+    border-width: 13px 9px 0 0;
+    border-color: #fff transparent transparent transparent;
+  }
+  .bubble-left::before {
+    left: auto;
+    right: 28px;
+    border-width: 19px 0 0 14px;
+    border-color: var(--ink) transparent transparent transparent;
+  }
+  .bubble-left::after {
+    left: auto;
+    right: 31px;
+    border-width: 13px 0 0 9px;
+    border-color: #fff transparent transparent transparent;
+  }
+  .bubble-thought {
+    border-radius: 30px;
+  }
+  .bubble-thought::before,
+  .bubble-thought::after {
+    border: 3px solid var(--ink);
+    border-radius: 50%;
+    background: #fff;
+  }
+  .bubble-thought::before {
+    bottom: -14px;
+    left: 26px;
+    width: 14px;
+    height: 14px;
+  }
+  .bubble-thought::after {
+    bottom: -26px;
+    left: 18px;
+    width: 8px;
+    height: 8px;
+  }
+
+  /* Starburst — for shouting. */
+  .burst {
+    @apply relative inline-flex items-center justify-center bg-yellow px-8 py-5 text-center font-display uppercase leading-none tracking-comic text-ink;
+    clip-path: polygon(50% 0%, 61% 10%, 75% 4%, 79% 18%, 94% 17%, 89% 31%, 100% 40%, 89% 50%, 100% 61%, 87% 69%, 92% 84%, 77% 82%, 74% 97%, 61% 89%, 50% 100%, 39% 89%, 26% 97%, 23% 82%, 8% 84%, 13% 69%, 0% 61%, 11% 50%, 0% 40%, 11% 31%, 6% 17%, 21% 18%, 25% 4%, 39% 10%);
+  }
+  .burst-red {
+    @apply bg-red text-white;
+  }
+  .burst-blue {
+    @apply bg-blue text-white;
+  }
+  .burst-wrap {
+    /* The ink outline for a burst is a slightly larger burst behind it. */
+    @apply relative inline-block;
+  }
+  .burst-wrap > .burst {
+    position: relative;
+    z-index: 1;
+  }
+  .burst-wrap::before {
+    content: '';
+    position: absolute;
+    inset: -5px;
+    background: var(--ink);
+    clip-path: polygon(50% 0%, 61% 10%, 75% 4%, 79% 18%, 94% 17%, 89% 31%, 100% 40%, 89% 50%, 100% 61%, 87% 69%, 92% 84%, 77% 82%, 74% 97%, 61% 89%, 50% 100%, 39% 89%, 26% 97%, 23% 82%, 8% 84%, 13% 69%, 0% 61%, 11% 50%, 0% 40%, 11% 31%, 6% 17%, 21% 18%, 25% 4%, 39% 10%);
+  }
+
+  /* Rubber stamp. */
+  .stamp {
+    @apply inline-block border-3 px-2 py-0.5 font-display text-base uppercase leading-none tracking-widest2;
+    transform: rotate(-6deg);
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='40'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.9 0.1'/%3E%3C/filter%3E%3Crect width='120' height='40' filter='url(%23n)'/%3E%3C/svg%3E");
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='40'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.9 0.1'/%3E%3C/filter%3E%3Crect width='120' height='40' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* Ben-Day dot fields. */
+  .dots {
+    @apply bg-halftone bg-dots;
+  }
+  .dots-lg {
+    @apply bg-halftone-strong bg-dots-lg;
+  }
+  .dots-white {
+    @apply bg-halftone-white bg-dots;
+  }
+  .dots-fade {
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), transparent);
+    mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), transparent);
+  }
+
+  /* Data table */
+  .data-table {
+    @apply w-full border-collapse font-mono text-[0.8rem];
+  }
+  .data-table th {
+    @apply sticky top-0 z-10 border-b-3 border-ink bg-yellow px-3 py-2 text-left font-display text-[0.95rem] font-normal uppercase tracking-comic text-ink;
+  }
+  .data-table td {
+    @apply border-b-2 border-line px-3 py-1.5 align-top text-ink;
+    white-space: nowrap;
+  }
+  .data-table tr:hover td {
+    @apply bg-yellow-light;
+  }
+
+  /* Inputs */
+  .field {
+    @apply w-full border-3 border-ink bg-white px-3 py-2.5 font-body text-base text-ink placeholder:text-ink-faint
+      transition-shadow duration-150 focus:shadow-glow-yellow focus:outline-none disabled:opacity-50;
+  }
+  .field-error {
+    @apply border-red focus:shadow-glow-crimson;
+  }
+
+  /* Chrome paints an autofilled input in its own pale blue and ignores
+     `background-color` outright — the UA rule wins. The only way through is an
+     inset shadow the size of the field, plus -webkit-text-fill-color for the
+     text, which is why this looks the way it does. Without it a remembered
+     investigator ID lands on a comic form in Chrome's blue, which belongs to
+     no palette in this book. The focus rule has to restate the yellow glow,
+     because the inset shadow occupies the same property. */
+  .field:-webkit-autofill,
+  .field:-webkit-autofill:hover,
+  .field:-webkit-autofill:focus {
+    -webkit-text-fill-color: var(--ink);
+    -webkit-box-shadow: 0 0 0 1000px #fff inset;
+    box-shadow: 0 0 0 1000px #fff inset;
+    caret-color: var(--ink);
+  }
+  .field:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 1000px #fff inset, 0 0 0 4px rgba(255, 209, 46, 0.55);
+    box-shadow: 0 0 0 1000px #fff inset, 0 0 0 4px rgba(255, 209, 46, 0.55);
+  }
+  .field-error:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 1000px #fff inset, 0 0 0 4px rgba(229, 50, 45, 0.3);
+    box-shadow: 0 0 0 1000px #fff inset, 0 0 0 4px rgba(229, 50, 45, 0.3);
+  }
+
+  /* The sign-in readout is the analyst's own monitor, quoted off the cover:
+     ink-black glass, mono type, and the same TONE palette (that palette lives
+     in Login.jsx beside the copy it colours). The font-size clamp is plain CSS
+     rather than @apply — a comma'd arbitrary value through @apply is the one
+     line here most likely to fail the build, and this rule already drops out
+     of the layer for background-color. */
+  .term {
+    @apply relative overflow-hidden border-3 border-ink font-mono leading-[1.55];
+    background-color: #06101b;
+    font-size: clamp(0.85rem, 1.6vmin, 1rem);
+  }
+
+  /* Hairline dividers */
+  .rule {
+    @apply h-[3px] w-full bg-ink;
+  }
+  .rule-soft {
+    @apply h-0.5 w-full bg-line;
+  }
+
+  /* Rows that respond to the pointer. */
+  .row-hover {
+    @apply transition-colors duration-150 hover:bg-yellow-light;
+  }
+  /* Whole panel lifts with a deeper shadow. */
+  .lift {
+    transition:
+      transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+      box-shadow 0.25s ease;
+  }
+  .lift:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 7px 7px 0 0 var(--ink);
+  }
+}
+
+/* Keyframes referenced by component classes (kept out of the layer). */
+@keyframes flashYellow {
+  from {
+    background-color: #fff2b8;
+  }
+  to {
+    background-color: transparent;
+  }
+}
+@keyframes flashRed {
+  from {
+    background-color: #ffd9d6;
+  }
+  to {
+    background-color: transparent;
+  }
+}
+@keyframes flashBlue {
+  from {
+    background-color: #d9e4ff;
+  }
+  to {
+    background-color: transparent;
+  }
+}
+@keyframes flashGreen {
+  from {
+    background-color: #d8f3e1;
+  }
+  to {
+    background-color: transparent;
+  }
+}
+@keyframes flashPurple {
+  from {
+    background-color: #e7dbff;
+  }
+  to {
+    background-color: transparent;
+  }
+}
+
+@layer utilities {
+  .flash-yellow {
+    animation: flashYellow 1.8s ease-out 1;
+  }
+  .flash-red {
+    animation: flashRed 1.8s ease-out 1;
+  }
+  .flash-blue {
+    animation: flashBlue 1.8s ease-out 1;
+  }
+  .flash-green {
+    animation: flashGreen 1.8s ease-out 1;
+  }
+  .flash-purple {
+    animation: flashPurple 1.8s ease-out 1;
+  }
+  .text-outline {
+    -webkit-text-stroke: 1.5px var(--ink);
+    paint-order: stroke fill;
+  }
+  .text-outline-thick {
+    -webkit-text-stroke: 3px var(--ink);
+    paint-order: stroke fill;
+  }
+  .text-shadow-comic {
+    text-shadow: 3px 3px 0 var(--ink);
+  }
+  .text-shadow-comic-sm {
+    text-shadow: 2px 2px 0 var(--ink);
+  }
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .tilt-l {
+    transform: rotate(-1.5deg);
+  }
+  .tilt-r {
+    transform: rotate(1.5deg);
+  }
+}
+
+/* The intro's Begin button: a comic slab that fills the art's INVESTIGATION
+   READY box on the last page (StoryIntro.jsx). Sized by the stage (cqw). */
+.intro-cta {
+  position: absolute;
+  inset: -8% -4%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #fff;
+  cursor: pointer;
+  font-size: 1.6rem;
+  font-size: clamp(14px, 2.9cqw, 44px);
+}
+.intro-cta__face {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45em;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 0 0.6em;
+  border: 0.11em solid #141414;
+  border-radius: 0.12em;
+  background: linear-gradient(180deg, #ff5a63 0%, #e5132b 48%, #b70d21 100%);
+  box-shadow: 0.18em 0.18em 0 #141414;
+  transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.15s, background 0.15s, color 0.15s;
+}
+.intro-cta__face::after {
+  content: '';
+  position: absolute;
+  inset: -0.11em;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: -1;
+  animation: intro-cta-glow 1.8s ease-in-out infinite;
+}
+.intro-cta__icon {
+  width: 0.95em;
+  height: 0.95em;
+  flex: none;
+  filter: drop-shadow(0.04em 0.05em 0 #141414);
+}
+.intro-cta__label {
+  font-family: 'Bangers', 'Comic Neue', Impact, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  line-height: 1;
+  white-space: nowrap;
+  -webkit-text-stroke: 0.035em #141414;
+  paint-order: stroke fill;
+  text-shadow: 0.05em 0.06em 0 #141414;
+}
+.intro-cta:hover:not(:disabled) .intro-cta__face {
+  transform: translate(-0.06em, -0.06em);
+  box-shadow: 0.26em 0.26em 0 #141414;
+  background: linear-gradient(180deg, #ffe066 0%, #ffd23b 50%, #e6b400 100%);
+  color: #141414;
+}
+.intro-cta:hover:not(:disabled) .intro-cta__label {
+  text-shadow: 0.05em 0.06em 0 rgba(20, 20, 20, 0.35);
+}
+.intro-cta:active:not(:disabled) .intro-cta__face {
+  transform: translate(0.12em, 0.12em);
+  box-shadow: 0 0 0 #141414;
+}
+.intro-cta:focus-visible .intro-cta__face {
+  outline: 0.12em solid #ffd23b;
+  outline-offset: 0.12em;
+}
+.intro-cta:disabled {
+  cursor: not-allowed;
+}
+.intro-cta--locked .intro-cta__face {
+  background: repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0 0.25em, transparent 0.25em 0.5em), linear-gradient(180deg, #6b131d 0%, #3d0a11 55%, #26070c 100%);
+  color: #ffd9dc;
+}
+.intro-cta--locked .intro-cta__icon {
+  color: #ff8a93;
+}
+.intro-cta--locked .intro-cta__face::after {
+  animation: none;
+}
+.intro-cta--locked .intro-cta__label {
+  -webkit-text-stroke-color: #1a0508;
+  text-shadow: 0.05em 0.06em 0 #1a0508;
+}
+/* Steam curling off the mug on the cover. Framer will not write a transform
+   onto an SVG <g>, so the rise is a CSS animation; the three wisps share this
+   cycle and are staggered by animation-delay. The reduced-motion rule at the
+   top of this file switches it off. */
+@keyframes steamRise {
+  0% {
+    opacity: 0;
+    transform: translateY(4px) scale(0.82);
+  }
+  22% {
+    opacity: 0.8;
+    transform: translateY(-6px) scale(1);
+  }
+  62% {
+    opacity: 0.7;
+    transform: translateY(-20px) scale(1.08);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-34px) scale(1.18);
+  }
+}
+
+@keyframes intro-cta-glow {
+  0%, 100% { box-shadow: 0 0 0.7em rgba(255, 45, 45, 0.4); }
+  50% { box-shadow: 0 0 1.3em rgba(255, 70, 70, 0.85); }
+}
+
+/* ------------------------------------------------ the sign-in page (Login) */
+
+/* The block cursor on the newest terminal line — the cover's 7x9px cyan
+   block, rebuilt as a class so `animate-blink` can drive it and the
+   reduced-motion rule at the top of this file kills it for free. Frozen, it
+   rests at the 0% frame (opacity 1), which is the correct still: a solid
+   block, not an invisible one. */
+.term-cursor {
+  display: inline-block;
+  width: 7px;
+  height: 9px;
+  margin-left: 3px;
+  vertical-align: middle;
+  background: #7fe3ff;
+}
+
+/* The refresh sweep down the glass. The cover animates `top` in pixels
+   because its monitor is a fixed 205px tall; this readout is clamped, so the
+   sweep rides background-position and works at any height. It is not
+   animating a transform, so it can never collide with anything Framer writes.
+   Login does not render .term-scan at all when useReducedMotion() is true:
+   the global rule fast-forwards an animation to its END frame rather than
+   parking it at 0%, so relying on that rule would leave a cyan bar stuck at
+   the bottom of the glass for ever. */
+@keyframes termScan {
+  from {
+    background-position: 0 -120%;
+  }
+  to {
+    background-position: 0 220%;
+  }
+}
+
+.term-scan {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(43, 191, 230, 0.2) 45%,
+    rgba(43, 191, 230, 0.2) 55%,
+    transparent 100%
+  );
+  background-size: 100% 42%;
+  background-repeat: no-repeat;
+  background-position: 0 -120%;
+  mix-blend-mode: screen;
+  animation: termScan 4.6s linear infinite;
+}
+
+/* The cream strip the cover's masthead sits on is just the body showing
+   through. A sticky header cannot be transparent, so this reproduces the body's
+   own colour and Ben-Day grid exactly — same rgba, same 9px tile — and the
+   play chrome uses it for its header and footer so all three pages share one
+   paper. */
+.paper-strip {
+  background-color: #f1e8d2;
+  background-image: radial-gradient(circle, rgba(20, 20, 20, 0.07) 1px, transparent 1.3px);
+  background-size: 9px 9px;
+}
+
+/* The clock in the play chrome's top bar.
+   Idle urgency paints the Timer white with ink-soft digits and an ink-faint
+   fill, which read as washed-out grey — the one live figure in the bar and the
+   quietest thing in it. It is now a yellow slab with full-ink digits and an
+   ink gauge on a white track: no text stroke, because ink on yellow is about
+   11:1 and needs no rescuing. The min-width holds the chip at a fixed size so
+   it reads as an instrument rather than a box that breathes with the digits,
+   and the Timer's own `w-full` track follows it.
+
+   Scoped to `> div.bg-white`, which is the idle box and ONLY the idle box, so
+   the urgency colours the Timer takes once the clock is running — yellow at
+   calm, orange under fifteen minutes, red under five — are left exactly as
+   they are. That escalation is the point of the component and must survive.
+   Note the consequence: idle now looks the same as `calm`, which is also
+   yellow-on-ink. The status Badge beside it is what separates "not started"
+   from "running with plenty of time". */
+.bar-clock > div.bg-white {
+  background: var(--yellow);
+  min-width: 122px; /* 1.5x the 81.09px the chip sizes itself to */
+}
+.bar-clock > div.bg-white [role='timer'] {
+  justify-content: center;
+  color: var(--ink);
+}
+.bar-clock > div.bg-white [role='timer'] + div {
+  background: #fff;
+}
+.bar-clock > div.bg-white [role='timer'] + div > div {
+  background: var(--ink);
+}
+
+/* The clock, frozen. TopBar adds `clock-frozen` to the bar clock while the
+   coordinator holds the event or once it is over, `clock-paused` while it is
+   held and `clock-closed` once it is over, and from lg presses a red-deep
+   rubber stamp — FROZEN / CLOSED — into the chip's top-right corner. All
+   plain CSS because the parts live in Timer.jsx, which the coordinator's
+   console shares; unlayered, so they outrank the utilities. The paused and
+   over slabs both keep the Timer's `bg-white` (idle) class, so `> div.bg-white`
+   matches them and the urgency colours of a RUNNING clock are never touched.
+
+   1. A frozen instrument does not blink: the Timer's pause glyph pulses by
+      default (`animate-pulse`, infinite) and this holds it still — that
+      glyph is the only `.animate-pulse` inside the Timer.
+   2. Paused, the chip FROSTS: cyan-light ice under a fine cyan Ben-Day dot
+      field — the book's halftone in the cold colour, the family of the blue
+      PAUSED! burst and the blue caption in the rail, and deliberately not
+      the Timer's orange, which means "fifteen minutes left" everywhere else
+      (ink on orange under a grained stamp was the smudge of the last pass).
+      Ink digits on the ice are ~15:1, the red-deep stamp 5.8:1. Both
+      properties are stated because the yellow rule above is the shorthand.
+      Over, the chip goes paper-3, a dead instrument: ink 13.8:1, red-deep
+      7.2:1. Hexes are tailwind.config's cyan-light, cyan and paper-3; there
+      are no --cyan variables.
+   3. A stamp is thin, tilted lettering under a grain mask and can only be
+      read against ONE flat tone, so it may not cross the digits, the gauge
+      or the chip's edge. From lg the frozen chip widens to 204px and its
+      digits move to the left end, which opens a flat field at the top right
+      exactly the stamp's size, above the gauge (which stays: the fraction
+      remaining is information). Below lg — where a 204px chip would push
+      the md stats row past 768px — the chip keeps its 122px, TopBar renders
+      no stamp, and the frost, the held glyph and the rail's burst carry the
+      state. */
+.clock-frozen .animate-pulse {
+  animation: none;
+}
+.bar-clock.clock-paused > div.bg-white {
+  background-color: #d4f1fa;
+  background-image: radial-gradient(circle, rgba(43, 191, 230, 0.4) 1.2px, transparent 1.4px);
+  background-size: 7px 7px;
+}
+.bar-clock.clock-closed > div.bg-white {
+  background-color: #e6dcc2;
+}
+@media (min-width: 1024px) {
+  .bar-clock.clock-frozen > div.bg-white {
+    min-width: 204px;
+  }
+  .bar-clock.clock-frozen > div.bg-white [role='timer'] {
+    justify-content: flex-start;
+  }
+}
+
+/* A lighter rubber grain for a small stamp. `.stamp`'s turbulence mask lets
+   any pixel drop to 10% alpha, which at the sign-in CLEARED's size reads as
+   rubber and at 16px reads as a smudge (the last pass's FROZEN). Same SVG,
+   the alpha row of the colour matrix lifted from 0.9n+0.1 to 0.35n+0.65, so
+   no stroke falls under 65%. Unlayered, so it outranks `.stamp`'s own mask. */
+.stamp-light {
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='40'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.35 0.65'/%3E%3C/filter%3E%3Crect width='120' height='40' filter='url(%23n)'/%3E%3C/svg%3E");
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='40'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.35 0.65'/%3E%3C/filter%3E%3Crect width='120' height='40' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+
+/* The waiting-room clock, drawn rather than boxed.
+   The shared Timer renders a bordered slab with the digits inside, which is
+   right on a dense screen but reads as a box-on-a-box when the tier behind it
+   is the same paper as the panel. Here the slab is stripped back to nothing
+   and the numerals carry the weight themselves: yellow fill, a 4px ink stroke
+   laid UNDER the fill by `paint-order` so the counters stay open, and the
+   book's own 5px offset shadow. The progress bar stays, as an ink rule under
+   the lettering.
+   Scoped to `.gate-clock` so every other Timer in the app — the top bar, the
+   coordinator's console — keeps its slab. */
+/* the gate's PAUSED label: the Timer's own text-orange is 1.9:1 on the
+   tier's cream; red-deep is 5.6:1 and is the FROZEN stamp's tone */
+.gate-clock .label.text-orange {
+  color: var(--red-deep);
+}
+.gate-clock > div {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.gate-clock [role='timer'] {
+  color: var(--yellow);
+  font-size: clamp(3.25rem, 9.5vmin, 6.25rem);
+  -webkit-text-stroke: 4px var(--ink);
+  paint-order: stroke fill;
+  text-shadow: 5px 5px 0 var(--ink);
+}
+.gate-clock [role='timer'] + div {
+  height: 0.75rem;
+  margin-top: 0.5rem;
+  border-width: 3px;
+  background: #fff;
+  box-shadow: 3px 3px 0 0 var(--ink);
+}
+/* The fill takes the digits' yellow rather than ink: at standby the bar is at
+   100%, and a full-width ink bar under the lettering reads as a redaction
+   line, not as a gauge. */
+.gate-clock [role='timer'] + div > div {
+  background: var(--yellow);
+}
+
+/* The hourglass turns itself over: sand runs, the glass is flipped, sand runs
+   again. Two long holds and two quick half-turns rather than a constant spin —
+   a clock that never rests reads as a loading spinner, not as time passing.
+   The end frame is 360deg, which is visually the start frame, so the global
+   reduced-motion rule parks it upright. */
+@keyframes sandFlip {
+  0%,
+  42% {
+    transform: rotate(0deg);
+  }
+  50%,
+  92% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.sand-flip {
+  animation: sandFlip 6s cubic-bezier(0.68, -0.4, 0.32, 1.4) infinite;
+}
+
+/* On a phone the burst keeps `size="lg"`'s py-8 — 32px of clip-path padding
+   top and bottom — and the "One hour!" caption hangs 28px below it, so the
+   cluster ran 18px past the bottom of the red field and the section's
+   overflow-hidden quietly cut the caption in half. Trimming the burst's own
+   padding buys that back without shrinking the lettering. */
+@media (max-width: 640px) {
+  .cover-burst > .burst {
+    padding: 1rem 2rem;
+  }
+}
+
+/* ------------------------------------------------------- the cover, when
+   the window is short.
+
+   The cover is a one-screen composition, and the constraint that bites is
+   HEIGHT, not width: a 1280x720 laptop leaves 651px under the masthead strip
+   for a block that wants 674. These rules give that back out of the two
+   biggest discretionary numbers — the masthead's cap and the page's own
+   breathing room — and only on a short window. Nothing above 780px tall
+   changes at all, so 1440x900 and 1920x1080 are untouched.
+
+   Written as classes rather than Tailwind's `[@media(max-height:780px)]:max-w-[...]`
+   because two bracket groups in one candidate defeat its content scanner —
+   the same trap that silently dropped the key-turn rule on the sign-in page,
+   where the class was in the markup and the CSS was never emitted. */
+@media (max-height: 780px) {
+  .cover-block {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+  .cover-masthead {
+    max-width: clamp(200px, 40vmin, 460px);
+  }
+}
+
+/* Below lg the cover stacks into one column and the analyst panel is not
+   rendered, so what is left has to lose a little more padding to clear a
+   844px-tall phone. */
+@media (max-width: 1023px) {
+  .cover-block {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+}
+
+/* The speed lines behind the sign-in panel. Two departures from the cover,
+   both deliberate. 48s not 24s: the cover's disc turns behind a title, this
+   one turns behind a reading task, and at r=400px a 24s revolution sweeps
+   ~105px/s through the corner of your eye while you type a password — 48s
+   halves that. And the disc is masked to nothing at its rim, because it is
+   centred on the panel rather than spilling off a corner, so without the mask
+   its outer edge reads as a circle drawn on the red.
+   This must stay a CSS animation on its own node: the outer div owns the
+   Tailwind translate, this inner one owns the rotation, and nothing Framer
+   writes may ever land on either (Framer writes `transform` wholesale). */
+@keyframes spinCalm {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* The IDENTITY / CHECK lettering, rocking the way hand-inked caps do when a
+   camera drifts over them. The two words share one cycle and sit half a phase
+   apart, so the title is never symmetrical and never still.
+   This must stay on its own node: the words' Framer entrance writes
+   `transform` wholesale onto the span above and would wipe the sway.
+   Under the reduced-motion rule at the top of this file both of these resolve
+   to `transform: none` — measured, not assumed — which is level lettering and
+   a level bubble. The correct still, so neither needs a JS gate. */
+@keyframes inkSway {
+  0% {
+    transform: rotate(-0.9deg) translateY(0);
+  }
+  50% {
+    transform: rotate(0.9deg) translateY(-4px);
+  }
+  100% {
+    transform: rotate(-0.9deg) translateY(0);
+  }
+}
+
+.ink-sway {
+  transform-origin: left center;
+  animation: inkSway 5.4s ease-in-out infinite;
+}
+.ink-sway-late {
+  animation-delay: -2.7s;
+}
+
+/* A printed gloss travelling across the sign-in button, the way a poster puts
+   a highlight across a solid slab of colour. It animates `left`, not
+   `transform`, for two reasons: the ::after already spends its transform on
+   the skew, and the Button itself animates transform on hover and press.
+   Under reduced motion it parks at `left: -60%` — measured, off the button's
+   left edge and clipped by the `overflow: hidden` above, so it is invisible
+   either way. */
+@keyframes slabShine {
+  0% {
+    left: -60%;
+  }
+  55%,
+  100% {
+    left: 118%;
+  }
+}
+
+.slab-shine {
+  overflow: hidden;
+}
+
+/* The key in the button turns when you reach for it. Written as plain CSS
+   rather than `hover:[&>svg]:rotate-[22deg]`: Tailwind's content scanner never
+   emitted that candidate — two bracket groups in one class name defeat the
+   extractor — so the rule silently did not exist. Verified here instead. */
+.key-turn > svg {
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.key-turn:hover:not(:disabled) > svg {
+  transform: rotate(22deg);
+}
+.slab-shine::after {
+  content: '';
+  position: absolute;
+  top: -60%;
+  bottom: -60%;
+  left: -60%;
+  width: 42%;
+  pointer-events: none;
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.8), transparent);
+  transform: skewX(-18deg);
+  animation: slabShine 3.8s ease-in-out infinite;
+}
+
+/* The narrator's caption rocking on its pin. `pop` leaves the box resting at
+   -4deg, and that rotation is a Framer-written transform, so the sway cannot
+   share the node — the caption is nested inside the motion span for exactly
+   that reason. This one is gentler than the title's: it is a small box of
+   lettering, not a headline. */
+@keyframes captionRock {
+  0% {
+    transform: rotate(-0.7deg);
+  }
+  50% {
+    transform: rotate(0.7deg) translateY(-2px);
+  }
+  100% {
+    transform: rotate(-0.7deg);
+  }
+}
+
+.caption-sway {
+  animation: captionRock 4.6s ease-in-out infinite;
+}
+
+/* The halftone in the panel's printed header, drifting. `.dots` tiles at
+   7px, so travelling exactly two tiles and looping is seamless — any other
+   distance would jump on repeat. */
+@keyframes dotsDrift {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 14px 14px;
+  }
+}
+
+.dots-drift {
+  animation: dotsDrift 7s linear infinite;
+}
+
+/* Each field's label icon pops when you put the caret in that field — the
+   comic equivalent of the thing you are touching sitting up. Keyed off
+   :focus-within on the wrapper, so it replays every time focus returns. */
+@keyframes iconPop {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+  45% {
+    transform: scale(1.35) rotate(-10deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+/* Scoped to the input's own focus, not the wrapper's. `:focus-within` also
+   matches when the reveal toggle inside the field takes focus, which made the
+   label icon jump for a control it has nothing to do with. */
+.field-wrap:has(.field:focus) > label > svg {
+  animation: iconPop 0.42s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* The speech bubble bobbing while he waits for you. It rides `.bubble` itself
+   so the inked tail travels with the body; the Framer pop that swaps one line
+   for the next sits on a wrapper above it. */
+@keyframes bubbleFloat {
+  0% {
+    transform: translateY(0) rotate(-0.35deg);
+  }
+  50% {
+    transform: translateY(-5px) rotate(0.35deg);
+  }
+  100% {
+    transform: translateY(0) rotate(-0.35deg);
+  }
+}
+
+.bubble-float {
+  animation: bubbleFloat 3.8s ease-in-out infinite;
+}
+
+.speed-field {
+  animation: spinCalm 48s linear infinite;
+  -webkit-mask-image: radial-gradient(closest-side, #000 36%, rgba(0, 0, 0, 0.5) 64%, transparent 93%);
+  mask-image: radial-gradient(closest-side, #000 36%, rgba(0, 0, 0, 0.5) 64%, transparent 93%);
+}
+
+/* ==========================================================================
+   THE INTERIOR PAGE — the investigation screen (/play, /play/:code).
+
+   The cover is page one: a red field under a white halftone with a disc
+   turning behind the masthead. This screen is that cover continued — the
+   same red, the same halftone, the same paper masthead closed by the same
+   5px seam — with the disc left out, and the case files laid on the field
+   the way the cover lays its panels: white, ink-framed, hard-shadowed, and
+   never a word set on the red itself. Everything below is that argument
+   written as rules.
+
+   Plain CSS throughout, for one of two reasons: the rule targets a child or
+   a pseudo-class Tailwind cannot express in a single candidate, or the
+   Tailwind form would carry TWO bracket groups and the content scanner would
+   silently emit nothing — the trap that already killed `.key-turn`.
+   ========================================================================== */
+
+/* ------------------------------------------------------------ the field
+   The cover's red, as the ground the case files are laid on.
+
+   Exactly the cover's field and nothing more: `bg-red` under `.dots-white`
+   at `opacity-70` — rgba(255,255,255,0.35) 1.4px dots on a 7px tile, which
+   composites to 0.245 white on #e5322d — written as a background plus a
+   ::after because a fixed, out-of-flow ground cannot carry the cover's
+   two-element markup. The disc does NOT come with it: a surface somebody
+   reads for an hour should not have a spoke sweeping under the result grid.
+   The one-pass arrival sweep stays on the ceremonial moments (Begin, the
+   reveal), where it is already JS-gated.
+
+   The ledger that decides what may touch this red: a white sheet on it is a
+   4.4:1 material step (it was 1.37:1 on the old cream desk) and ink on it
+   is 4.3:1, so every 5px frame and 10px hard shadow stays a crisp edge —
+   the cover's own construction. But ink-soft on it is 1.9:1 and red-deep on
+   it is 1.6:1, which is why every loader and error state is wrapped in a
+   sheet, why the two caption chips that overhang a sheet's top edge onto
+   the field are white rather than red-deep, and why no type is ever set on
+   the ground itself: the cover does that once for its title; the working
+   screen never does. The paper chrome above the field (the header and,
+   welded 5px over its rule, the section rail) is one cream masthead closed
+   by the rail's border-b-5, which is the cover's seam; the case folder's
+   tabs hang off that seam into the red as chips on their own paper, and
+   the paused / over notice is a caption chip pinned in the rail plus an
+   ink stamp on the clock, never a band. The stages that used to paint
+   their own red
+   paint nothing now: a second copy of the halftone would sit out of phase
+   with this fixed one and show a seam at its edges.
+
+   `fixed` and out of flow, twice over: the field must cost the page no
+   height (the terminal view is already ~1.7 viewports at 1280x720), and the
+   ground under a surface somebody works in for an hour should not travel
+   while they scroll it.
+
+   It sits at z-index -10 inside #root, which already carries
+   `isolation: isolate`, so a negative-z child paints behind #root's content
+   and over the body. That only holds while nothing between #root and this
+   node creates a stacking context: Investigate's root div must stay a bare
+   div — no `isolate`, no transform, no filter, no opacity below 1. */
+.desk {
+  position: fixed;
+  inset: 0;
+  z-index: -10;
+  pointer-events: none;
+  background-color: var(--red);
+}
+.desk::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.35) 1.4px, transparent 1.6px);
+  background-size: 7px 7px;
+  opacity: 0.7;
+}
+
+/* --------------------------------------------------------- the full bleed
+   The chrome bands and the ceremonial red stages reach both window edges
+   while their CONTENT stays exactly on main's column: margin-inline pulls
+   the box out to the viewport, padding-inline puts precisely the same amount
+   back, and the two cancel at every width. Without this the bands stop at
+   max-w-[1500px] and read as cream islands on the desk between a full-width
+   paper masthead and a full-width paper footer.
+
+   100vw includes the scrollbar, so when one is present the band overhangs
+   ~5px past each edge. It is flat colour, `body { overflow-x: hidden }`
+   already absorbs it, and the content does not move because the margin and
+   the padding shift together. */
+.play-band {
+  margin-inline: calc(50% - 50vw);
+  padding-inline: calc(50vw - 50%);
+}
+
+/* -------------------------------------------------------- the sticky rail
+   The section rail is the masthead's SECOND ROW, stuck to the header.
+   `--masthead` is the header's live border-box height (69px at h-16, 85px
+   on a window taller than 960px), written to <html> by PlayLayout's
+   ResizeObserver; the fallbacks here restate those two numbers for a
+   browser without it, next to each other so they can be kept honest against
+   PlayLayout's `[@media(min-height:960px)]:h-20`.
+
+   The rail sticks 5px ABOVE the header's bottom edge — over the header's
+   own border-b-5 — and paints on top of it (same z-index, later in the
+   DOM, both inside #root's isolate context with no stacking context in
+   between), so the cream runs unbroken from the wordmark to this row's seam
+   and the header's rule shows only on the pages that have no rail (loading,
+   error, Begin, the waiting room), which therefore need no seam of their
+   own. The margin cancels main's pt-6 and the same 5px, so at scroll 0 the
+   rail already rests at its stuck position and nothing jumps when scrolling
+   starts; it is a margin, not a stacking context, so .desk stays behind the
+   page. background-position re-phases this row's 9px Ben-Day tile to the
+   header's — whose origin is the viewport's top, always, being top-0 sticky
+   — so the two rows print as one sheet with no phase seam between them. */
+.play-chrome {
+  position: sticky;
+  top: calc(var(--masthead, 69px) - 5px);
+  z-index: 30;
+  margin-top: calc(-1.5rem - 5px);
+  background-position: 0 calc(5px - var(--masthead, 69px));
+}
+@media (min-height: 960px) {
+  .play-chrome {
+    top: calc(var(--masthead, 85px) - 5px);
+    background-position: 0 calc(5px - var(--masthead, 85px));
+  }
+}
+
+/* ------------------------------------------------------------- the glass
+   Monaco stops being a sheet of paper and becomes the analyst's monitor.
+
+   This REPLACES the white override that used to sit above the intro rules.
+   It stays outside every layer and keeps !important because that is the only
+   thing that outranks Monaco's own inline background — the theme's
+   `editor.background` loses to it, which is the trap anyone restyling this
+   editor hits first.
+
+   Unscoped on purpose. `fixedOverflowWidgets: true` (SqlEditor.jsx) re-parents
+   the suggest, hover and parameter-hint widgets onto body, outside any
+   wrapper a scoped rule could reach, where they would paint white slabs under
+   dark-theme text. SqlEditor is imported by exactly two files — FilePanel.jsx
+   and FinalPanel.jsx — and both are glass now. */
+.monaco-editor,
+.monaco-editor .margin,
+.monaco-editor-background {
+  background-color: #06101b !important;
+}
+
+/* ----------------------------------------------------------- sheet tiers
+   A tier's first child must not carry the margin it had when it was a
+   sibling in one long white column. Written as a plain rule because the
+   Tailwind form, `[&>*:first-child]:mt-0`, is two bracket groups in one
+   candidate and would never be emitted. */
+.tier-flush > :first-child {
+  margin-top: 0;
+}
+
+/* -------------------------------------------------- the accusation labels
+   Field.jsx hard-codes `.label` on its label — ink-soft at 0.95rem — and the
+   accusation is the one form in the game that decides the hour, so its
+   labels go full ink (15.10:1 on the tier's paper-2) and step up with the
+   window. A plain selector, because the Tailwind form is two bracket groups
+   in one candidate. */
+.accuse-form .label {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  color: var(--ink);
+  font-size: clamp(0.85rem, 1.7vmin, 1.05rem);
+}
+
+/* --------------------------------------------------------- comic numerals
+   The final score, drawn rather than set. `.gate-clock`'s numerals lifted
+   verbatim: yellow fill, a 4px ink stroke laid UNDER the fill by paint-order
+   so the counters stay open, and the book's 5px offset shadow. It goes on
+   the reveal sheet's own cream tier — exactly where the waiting room puts
+   its clock — and never on the red, where yellow measures 2.99:1. The
+   legibility comes from the ink contour, not the fill. */
+.score-numeral {
+  color: var(--yellow);
+  line-height: 1;
+  -webkit-text-stroke: 4px var(--ink);
+  paint-order: stroke fill;
+  text-shadow: 5px 5px 0 var(--ink);
+}
+
+/* ------------------------------------------------------- two new captions
+   The book had four caption fills — yellow, white, red, blue — and no
+   warning tone, which is why three separate sites on this screen reached for
+   a bare `text-orange` (2.36:1 on white, the least legible text on the page,
+   and the line that tells a player their clock has stopped).
+
+   `.caption-deep` exists because `.caption-red` is font-display at 18px and
+   Bangers carries no bold weight, so white on #e5322d at 4.35:1 is strictly
+   under AA there. On red-deep the same chip is 6.84:1 at any size and stays
+   in palette. It is a NEW class rather than an edit to `.caption-red`,
+   because Misc.jsx, Modal.jsx and Panel.jsx all map the `crimson` tone to
+   `.caption-red` app-wide, including screens outside this task. */
+@layer components {
+  .caption-deep {
+    @apply inline-block border-3 border-ink bg-red-deep px-3 py-1 font-display text-lg uppercase leading-none tracking-comic text-white shadow-comic-sm;
+  }
+  .caption-orange {
+    @apply inline-block border-3 border-ink bg-orange px-3 py-1 font-display text-lg uppercase leading-none tracking-comic text-ink shadow-comic-sm;
+  }
+  /* The over-state burst. `.burst-red` is white on #e5322d, 4.35:1, which
+     Bangers (no bold weight) only clears at 24px and above; on red-deep the
+     same lettering is 6.84:1 at any size, and it is the tone `.caption-deep`
+     already uses for the sentence beside it. */
+  .burst-deep {
+    @apply bg-red-deep text-white;
+  }
+}
+
+/* --------------------------------------------------------- the SFX burst
+   The coordinator's PAUSED! / CASE OVER! shout, pinned at the rail's right
+   end and rocking on its pin. The rock rides `.burst-wrap` — the node that
+   also carries the ink outline (its ::before), so the outline rocks with
+   the fill — around the burst's resting +7deg (`.burst-tilt`). Nothing
+   else may write a transform onto that node: the Framer pop sits on a
+   wrapper above it, and the static translate that hangs the burst over the
+   seam sits on a wrapper between. The keyframe's END frame is its rest, so
+   the reduced-motion rule at the top of this file parks it level with its
+   tilt; Investigate only adds `.burst-rock` without reduced motion anyway.
+   Do not change the 100% frame: on this node the animation outranks the
+   static rotate. */
+@keyframes burstRock {
+  0% {
+    transform: rotate(7deg);
+  }
+  50% {
+    transform: rotate(4deg) translateY(-3px);
+  }
+  100% {
+    transform: rotate(7deg);
+  }
+}
+.burst-tilt {
+  transform: rotate(7deg);
+}
+.burst-rock {
+  animation: burstRock 3.2s ease-in-out infinite;
+}
+
+/* ------------------------------------------------------- the case folder
+   The file tabs, cut as a folder's index tabs: trapezoids hanging off the
+   masthead's seam, full width where they attach and narrowing 7px a side,
+   inked on their three free edges (the seam is the fourth), overlapping
+   their neighbours by that same 7px at the seam so the run reads as ONE
+   folder's edge with a red notch between tabs, rather than six chips under
+   a rule. The open file's tab is yellow, pulled 4px further out, and
+   carries the book's 4px hard shadow behind it.
+
+   A clip-path clips borders and box-shadows with everything else, so a
+   tab is three trapezoids, not one bordered box: the element's ::before is
+   the ink one (the outline); `.ftab-face`, a child inset 3px on the three
+   free sides, is the paper one; and the open tab's ::after is a third ink
+   one shifted 4px 4px — the shadow. The cut is the same polygon on all
+   three; on the smaller face it lands 0.4px off parallel at mid-height,
+   which no eye can see. The lettering sits in `.ftab-body`, above all
+   three. `z-index: 0` on the tab makes it a stacking context so the shadow
+   (z -1) stays behind its own outline. Plain CSS throughout: pseudo-
+   elements, a custom property and calc() inside a polygon are not one
+   Tailwind candidate — and note this rule's `display` outranks the
+   `hidden` utility, so a tab's responsive display goes on its wrapper.
+   Padding 14px a side (not more): at 1280 the six 16px titles must fit the
+   1232px column with FIN still on screen and clear of the hanging burst. */
+.ftab {
+  --cut: polygon(0 0, 100% 0, calc(100% - 7px) 100%, 7px 100%);
+  position: relative;
+  z-index: 0;
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 14px 10px;
+  white-space: nowrap;
+  transition:
+    padding-bottom 0.15s ease,
+    transform 0.15s ease;
+}
+.ftab::before,
+.ftab-open::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--ink);
+  clip-path: var(--cut);
+}
+.ftab-open::after {
+  z-index: -1;
+  transform: translate(4px, 4px);
+}
+.ftab-face {
+  position: absolute;
+  inset: 0 3px 3px 3px;
+  z-index: 1;
+  background: var(--paper-2);
+  clip-path: var(--cut);
+}
+.ftab-body {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+.ftab-open {
+  padding-bottom: 14px;
+}
+.ftab-open .ftab-face {
+  background: var(--yellow);
+}
+/* sealed: paper-3 under a faint diagonal hatch, the padlock beside the title */
+.ftab-locked .ftab-face {
+  background:
+    repeating-linear-gradient(135deg, rgba(20, 20, 20, 0.09) 0 4px, transparent 4px 10px),
+    var(--paper-3);
+}
+.ftab-spine .ftab-face {
+  background: var(--red-deep);
+}
+/* the two kinds of tab you can press: a 2px pull, on this node only — the
+   Framer entrance lives on the wrapper above it */
+.ftab-idle:hover,
+.ftab-done:hover {
+  transform: translateY(2px);
+}
+.ftab-idle:hover .ftab-face {
+  background: #fff2b8;
+}
+.ftab-done:hover .ftab-face {
+  background: #d8f3e1;
+}

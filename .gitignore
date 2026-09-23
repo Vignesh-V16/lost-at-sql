@@ -1,0 +1,36 @@
+# dependencies
+node_modules/
+package-lock.json.bak
+
+# environment — never commit secrets
+.env
+.env.*
+!.env.example
+
+# exported event data — contains the answer key and account hashes
+transfer/
+handout/
+
+# builds
+client/dist/
+server/dist/
+
+# logs & caches
+*.log
+npm-debug.log*
+.eslintcache
+.vite/
+
+# the film's working files (tools/film/README.md)
+tools/film/.cache/
+tools/film/panels.html
+tools/film/film-info.json
+tools/film/soundtrack.wav
+tools/film/*.mp4
+tools/film/parts.txt
+
+# editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

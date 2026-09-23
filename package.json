@@ -1,0 +1,34 @@
+{
+  "name": "lost-at-sql",
+  "version": "1.0.0",
+  "description": "LOST AT SQL — Operation: Black Cipher. SQL Investigation Game Engine + event platform.",
+  "private": true,
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "dev": "concurrently -k -n SERVER,CLIENT -c cyan,magenta \"npm run dev --prefix server\" \"npm run dev --prefix client\"",
+    "dev:server": "npm run dev --prefix server",
+    "dev:client": "npm run dev --prefix client",
+    "seed": "npm run seed --prefix server",
+    "build": "npm run build --prefix client",
+    "start": "npm start --prefix server",
+    "test": "npm test --prefix server",
+    "lint": "npm run lint --prefix client",
+    "clean:legacy": "node scripts/remove-legacy.mjs",
+    "host": "node scripts/host.mjs",
+    "host:quick": "node scripts/host.mjs --no-build",
+    "lab": "node scripts/lab.mjs",
+    "lab:check": "node scripts/lab.mjs --check",
+    "handout": "node scripts/handout.mjs",
+    "export": "node scripts/transfer.mjs",
+    "import": "node scripts/transfer.mjs --import"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

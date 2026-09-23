@@ -1,0 +1,31 @@
+{
+  "name": "lost-at-sql-server",
+  "version": "1.0.0",
+  "description": "SQL Investigation Game Engine \u2014 backend for LOST AT SQL: Operation Black Cipher",
+  "private": true,
+  "type": "module",
+  "main": "src/index.js",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "node --watch src/index.js",
+    "start": "node src/index.js",
+    "seed": "node src/scripts/seed.js",
+    "test": "node tests/run.js",
+    "test:unit": "node tests/run.js engine content sqlGuard",
+    "test:integration": "node tests/run.js integration"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "express-rate-limit": "^7.4.0",
+    "helmet": "^7.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.6.0",
+    "socket.io": "^4.7.5",
+    "sql.js": "^1.11.0",
+    "zod": "^3.23.8"
+  }
+}
